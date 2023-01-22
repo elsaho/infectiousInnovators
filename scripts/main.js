@@ -49,7 +49,7 @@ function addToLike(id) {
 
 }
 // Used to display tasks on main page.
-function displayCardTasks(collection) {
+function displayCardProfile(collection) {
   let cardTemplate = document.getElementById("displayPersonTemplate");
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -71,6 +71,7 @@ function displayCardTasks(collection) {
             var hook = doc.data().hook;
             var prompt1 = doc.data().prompt1;
             var prompt2 = doc.data().prompt2;
+            var picUrl = doc.data().profilePic;
             let newcard = cardTemplate.content.cloneNode(true);
 
             //update title and text and image
@@ -80,7 +81,9 @@ function displayCardTasks(collection) {
             newcard.querySelector('.hook').innerHTML = hook;
             newcard.querySelector('.prompt1').innerHTML = prompt1;
             newcard.querySelector('.prompt2').innerHTML = prompt2;
-
+            const img = document.createElement('img');
+            newcard.querySelector('.profilePic').appendChild(img).src = picUrl;
+            img.className = "standard-image";
             //give unique ids to all elements for future use
             // newcard.querySelector('.date').setAttribute("id", "tdate" + i);
             // newcard.querySelector('.card-title').setAttribute("id", "tTitle" + i);
@@ -102,6 +105,6 @@ function displayCardTasks(collection) {
     }
   });
 }
-displayCardTasks("test");
+displayCardProfile("test");
 
 console.log("test");

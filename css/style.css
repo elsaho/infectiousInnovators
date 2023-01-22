@@ -169,3 +169,8 @@ body {
 .justify-self-center{
     justify-self: end;
 }
+
+.standard-image{
+    width: 100%;
+    height: 100%;
+}
