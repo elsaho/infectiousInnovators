@@ -12,7 +12,7 @@ var uiConfig = {
                     country: "Canada",                      
                 }).then(function () {
                     console.log("New user added to firestore");
-                    window.location.assign("/html/main.html");       
+                    window.location.assign("/html/settings.html");       
                 })
                 .catch(function (error) {
                     console.log("Error adding new user: " + error);
