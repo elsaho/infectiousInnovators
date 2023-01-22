@@ -1,17 +1,20 @@
 var currentUser;
+var uid;
+var matchID;
+var likes;
 
 firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-      currentUser = db.collection("users").doc(user.uid); //global
-      console.log(currentUser);
-  
-      // the following functions are always called when someone is logged in
-    } else {
-      // No user is signed in.
-      console.log("No user is signed in");
-      window.location.href = "login.html";
-    }
-  });
+  if (user) {
+    currentUser = db.collection("users").doc(user.uid); //global
+    console.log(currentUser);    
+
+    // the following functions are always called when someone is logged in
+  } else {
+    // No user is signed in.
+    console.log("No user is signed in");
+    window.location.href = "login.html";
+  }
+});
 
 
 // Used to display tasks on main page.
@@ -21,18 +24,18 @@ function displayCardProfile(collection) {
     if (user) {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
-      var uid = user.uid;
+      uid = user.uid;
       console.log(uid);
       var ID = [];
       db.collection("users")
-      .limit(1)
+        .limit(1)
         .get()
         .then(snap => {
-          var i = 1;  //if you want to use commented out section
+          var i = 1; //if you want to use commented out section
           snap.forEach(doc => { //iterate thru each doc
             ID.push(doc.data().ID_Name);
             var name = doc.data().name;
-            var age = doc.data().age;        // get value of the "name" key
+            var age = doc.data().age; // get value of the "name" key
             var location = doc.data().location;
             var hook = doc.data().hook;
             var prompt1 = doc.data().prompt1;
@@ -57,27 +60,28 @@ function displayCardProfile(collection) {
             // newcard.querySelector('.card-title').setAttribute("class", "tTitle" + " btn onyx lavender-blush-text card-href card-title d-block");
             // newcard.querySelector('.timeStart').setAttribute("id", "tStart" + i);
             // newcard.querySelector('.timeEnd').setAttribute("id", "tEnd" + i);
-            
+
 
             //likes field created in Fire Store foe addToLikes()
             currentUser.set({
-                likes: firebase.firestore.FieldValue.arrayUnion(),
-              }, {
-                merge: true
+              likes: firebase.firestore.FieldValue.arrayUnion(),
+              matches: firebase.firestore.FieldValue.arrayUnion(),
+            }, {
+              merge: true
             })
 
             newcard.querySelector('.heart').id = "save-" + userID;
             newcard.querySelector('.heart').onclick = () => addToLikes(userID);
             currentUser.get().then(userDoc => {
-                var likes = userDoc.data().likes;
-                if (likes.includes(userID)) {
+              var likes = userDoc.data().likes;
+              if (likes.includes(userID)) {
                 document.getElementById('save-' + userID).innerText = 'favorite';
-                }
-              })
+              }
+            })
 
             //attach to gallery
             document.getElementById(collection + "-go-here").appendChild(newcard);
-            i++;   //if you want to use commented out section
+            i++; //if you want to use commented out section
 
           })
 
@@ -92,52 +96,86 @@ function displayCardProfile(collection) {
 displayCardProfile("profile");
 
 function addToLikes(id) {
-    currentUser.get().then((userDoc) => {
-        like = userDoc.data().likes;
-        console.log(like);
+  currentUser.get().then((userDoc) => {
+    likes = userDoc.data().likes;
+    console.log(likes);
 
-        if (like.includes(id)) {
-            console.log(id)
-            currentUser
-              .update({
-                likes: firebase.firestore.FieldValue.arrayRemove(id),
-              })
-              .then(function () {
-                console.log("This person is removed");
-                var iconID = "save-" + id;
-                console.log(iconID);
-                document.getElementById(iconID).innerText = 'favorite_border';
-              });
-          } else {
-            currentUser
-              .set({
-                likes: firebase.firestore.FieldValue.arrayUnion(id),
-              }, {
-                merge: true
-              })
-              .then(function () {
-                console.log("This person is added");
-                var iconID = "save-" + id;
-                console.log(iconID);
-                document.getElementById(iconID).innerText = 'favorite';
-              });
-          }
-    });
-
+    if (likes.includes(id)) {
+      console.log(id)
+      currentUser
+        .update({
+          likes: firebase.firestore.FieldValue.arrayRemove(id),
+        })
+        .then(function () {
+          console.log("This person is removed");
+          var iconID = "save-" + id;
+          console.log(iconID);
+          document.getElementById(iconID).innerText = 'favorite_border';
+        });
+    } else {
+      currentUser
+        .set({
+          likes: firebase.firestore.FieldValue.arrayUnion(id),
+        }, {
+          merge: true
+        })
+        .then(function () {
+         
+          console.log("This person is added");
+          var iconID = "save-" + id;
+          console.log(iconID);
+          document.getElementById(iconID).innerText = 'favorite';
+        });
+    }
+  });
 }
 
+function checkMatch() {
+  var match;
+    for (i = 0; i < likes.length; i++) {
+      matchID = likes[i];
+      match = db.collection("users").where("userID", "==", matchID);
+      
 
-function blurify(){
+      db.collection("users").where("userID", "==", matchID)
+        .get().then(add => {
+          currentUser.set({
+              matches: firebase.firestore.FieldValue.arrayUnion(matchID),
+            }, {
+              merge: true
+            })
+            .then(function () {
+              console.log("You are a match!");
+              console.log(matchID);
+            });
+        })
+        match.get().then((doc) => {
+          match.set({
+              matches: firebase.firestore.FieldValue.arrayUnion(uid),
+            }, {
+              merge: true
+            })
+            .then(function () {
+              console.log("Romance Ahead!");
+            });
+        })
+      
+    }
+}
+// checkMatch();
+
+
+function blurify() {
   const profileImage = document.querySelector(".standard-image");
   let pixelArr = ctx.getImageData(0, 0, profileImage.width, profileImage.height).data;
   let sample_size = 40;
 
   for (let y = 0; y < h; y += sample_size) {
     for (let x = 0; x < w; x += sample_size) {
-      let p = (x + (y*w)) * 4;
+      let p = (x + (y * w)) * 4;
     }
   }
 
   ctx.fillStyle = "rgba(" + pixelArr[p] + "," + pixelArr[p + 1] + "," + pixelArr[p + 2] + "," + pixelArr[p + 3] + ")";
-ctx.fillRect(x, y, sample_size, sample_size);
+  ctx.fillRect(x, y, sample_size, sample_size);
 }
