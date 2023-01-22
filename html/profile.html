@@ -40,16 +40,16 @@
           <label>Name</label>
           <input type="text" id="nameInput" class="form-control" placeholder="Enter your name">
         </div>
-        <!-- <div class="form-group">
+        <div class="form-group">
           <label>Age</label>
-          <input type="number" id="age" class="form-control" min = "18" max = "100" placeholder="Enter your age"
-          step="2">
-        </div> -->
+          <input type="number" id="ageInput" class="form-control" min = "18" max = "100" placeholder="Enter your age"
+          step="1">
+        </div>
         <div class="form-group">
           <label>Location</label>
-          <input type="text" id="Location" class="form-control" placeholder="Enter your location">
+          <input type="text" id="locationInput" class="form-control" placeholder="Enter your location">
         </div>
-        <label>Gender <span style="display:inline-block; width: 20pt;"></span></label>
+        <label>Gender<span style="display:inline-block; width: 20pt;"></span></label>
 
         <div class="form-check form-check-inline">
           <input class="form-check-input Male" type="radio" name="Gender" value="Male">
@@ -63,6 +63,20 @@
           <input class="form-check-input Non-binary" type="radio" name="Gender" value="Non-binary">
           <label>Non-binary</label>
         </div>
+        <!-- <br>
+        <label>Hobbies<span style="display:inline-block; width: 20pt;"></span></label>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+          <label class="form-check-label" for="inlineCheckbox1">1</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+          <label class="form-check-label" for="inlineCheckbox2">2</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
+          <label class="form-check-label" for="inlineCheckbox3">3 (disabled)</label>
+        </div> -->
       </fieldset>
       <div class="d-flex justify-content-end mt-5">
         <button type="button" class="btn btn-info" onclick="editUserInfo()">Edit</button>
@@ -112,7 +126,6 @@
   <nav id="footerPlaceholder"></nav>
 
   <!-- Scripts -->
-  <script src="/scripts/authentication.js"></script>
   <script src="/scripts/firebase.js"   ></script>
   <script src="/scripts/skeleton.js"></script>
   <script src="/scripts/profile.js"></script>
