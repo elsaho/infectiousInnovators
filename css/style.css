@@ -1,4 +1,6 @@
 /* Icon sizes */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
+
 .material-icons.md-18 {
     font-size: 18px;
 }
@@ -67,6 +69,19 @@ i {
 /* COLORS */
 
 /* COLOR PALETTE COLORS */
+.timberwolf {
+    background-color: #eadeda;
+}
+
+.brandy {
+    background-color: #8a3033;
+}
+
+.burnt-umber {
+    background-color: #823329;
+}
+
+
 .dark-turquoise {
     background-color: #52dee5;
 }
@@ -130,7 +145,7 @@ body {
 }
 
 .btn:hover {
-    color: #eee5e9;
+    color: #823329;
 }
 
 /* css for cursor pointer */
@@ -166,6 +181,10 @@ body {
     cursor: pointer;
 }
 
+#title {
+    cursor: pointer;
+}
+
 .justify-self-center{
     justify-self: end;
 }
@@ -173,4 +192,21 @@ body {
 .standard-image{
     width: 100%;
     height: 100%;
+}
+
+/* Stuff for buttons*/
+.editProfBtn{
+    background-color: #823329 !important;
+}
+
+.editPrefBtn{
+    background-color: #823329 !important;
+}
+
+button[type=button]{
+    background-color: #823329 !important;
+}
+
+a[type=button]{
+    background-color: #823329 !important;
 }

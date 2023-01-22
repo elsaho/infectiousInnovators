@@ -3,7 +3,7 @@
 
 <head>
   <title>Pixel Perfect Match</title>
-  <!-- <link rel="icon" type="image/x-icon" href="/images/favicon.ico"> -->
+  <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -65,19 +65,19 @@
        -->
       
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="prefMale">
+        <input class="form-check-input" type="checkbox" value="" id="prefMale" name = "prefGender">
         <label class="form-check-label" for="prefMale">
           Male
         </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="prefFemale" checked>
+        <input class="form-check-input" type="checkbox" value="" id="prefFemale" name = "prefGender">
         <label class="form-check-label" for="prefFemale">
           Female
         </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="prefNonBinary" checked>
+        <input class="form-check-input" type="checkbox" value="" id="prefNonBinary" name = "prefGender">
         <label class="form-check-label" for="prefNonBinary">
           Non-binary
         </label>
@@ -87,7 +87,7 @@
     <div class="d-flex justify-content-end mt-5">
         <button type="button" class="btn btn-info" onclick="editUserPref()">Edit</button>
         <span style="width: 10px"></span>
-        <button type="button" class="btn btn-info" onclick="saveUserPref()">Save</button>
+        <button type="button" class="btn btn-info" id = "btn" onclick="saveUserPref()">Save</button>
       </div>
     
     </form>
