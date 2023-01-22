@@ -71,7 +71,7 @@ function displayCardProfile(collection) {
             currentUser.get().then(userDoc => {
                 var likes = userDoc.data().likes;
                 if (likes.includes(userID)) {
-                document.querySelector('.heart').innerText = 'favorite';
+                document.getElementById('save-' + userID).innerText = 'favorite';
                 }
               })
 
@@ -106,7 +106,7 @@ function addToLikes(id) {
                 console.log("This person is removed");
                 var iconID = "save-" + id;
                 console.log(iconID);
-                document.querySelector('.heart').innerText = 'favorite_border';
+                document.getElementById(iconID).innerText = 'favorite_border';
               });
           } else {
             currentUser
@@ -119,7 +119,7 @@ function addToLikes(id) {
                 console.log("This person is added");
                 var iconID = "save-" + id;
                 console.log(iconID);
-                document.querySelector('.heart').innerText = 'favorite';
+                document.getElementById(iconID).innerText = 'favorite';
               });
           }
     });
