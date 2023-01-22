@@ -5,7 +5,8 @@ var uiConfig = {
       signInSuccessWithAuthResult: function (authResult, redirectUrl) {
         var user = authResult.user;                            
         if (authResult.additionalUserInfo.isNewUser) {      
-            db.collection("users").doc(user.uid).set({        
+            db.collection("users").doc(user.uid).set({  
+                    userID: user.uid,      
                     name: user.displayName,                
                     email: user.email,                       
                     country: "Canada",                      
