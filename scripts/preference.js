@@ -9,7 +9,8 @@ function populateInfo() {
   
         currentUser.get()
           .then(userDoc => {
-            var prefAge = userDoc.data().prefAge;
+            var minAge = userDoc.data().minAge;
+            var maxAge = userDoc.data().maxAge;
             var prefLocation = userDoc.data().prefLocation;
             // var prefFemale = userDoc.data().prefFemale;
             // var prefMale = userDoc.data().prefMale;
@@ -170,7 +171,8 @@ function populateInfo() {
   }
   
   function saveUserPref() {  
-    prefAge = document.getElementById('prefAge').value; 
+    minAge = document.getElementById('minAge').value; 
+    maxAge = document.getElementById('maxAge').value; 
     prefLocation = document.getElementById('prefLocation').value;
     // prefMale = document.querySelector('input[name="prefGender"]:checked').value;
     // prefFemale = document.querySelector('input[name="prefGender"]:checked').value;
@@ -180,7 +182,8 @@ function populateInfo() {
     // prefNonBinary = document.getElementById('prefNonBinary').value;
   
     currentUser.update({
-        prefAge: prefAge,
+        minAge: minAge,
+        maxAge: maxAge,
         prefLocation: prefLocation,
         // genderPref: genderPref
         // prefMale: prefMale,
