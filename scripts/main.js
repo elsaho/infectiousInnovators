@@ -49,7 +49,7 @@ function displayCardProfile(collection) {
             newcard.querySelector('.prompt1').innerHTML = "Fun fact: " + prompt1;
             newcard.querySelector('.prompt2').innerHTML = "Wants someone who: " + prompt2;
             const img = document.createElement('img');
-            newcard.querySelector('.profilePic').appendChild(img).src = picUrl;
+            newcard.querySelector('#profilePic').appendChild(img).src = picUrl;
             img.className = "standard-image";
             //give unique ids to all elements for future use
             // newcard.querySelector('.date').setAttribute("id", "tdate" + i);
@@ -128,42 +128,43 @@ function addToLikes(id) {
 
 
 function blurify() {
-  const profileImage = document.querySelector(".profilePic");
-  let c = document.createElement("canvas");
-  let img1 = new Image();
+  const profileImage = document.querySelector(".standard-image");
 
-  img1.onload = function () {
-    document.getElementById("image1").remove();
+  // let c = document.createElement("canvas");
+  // let img1 = new Image();
+  // let source;
+  // img1.onload = function () {
+  //   document.querySelector("#profilePic").remove();
 
-    w = img1.width;
-    h = img1.height;
+  //   w = img1.width;
+  //   h = img1.height;
 
-    c.width = w;
-    c.height = h;
-    ctx = c.getContext('2d');
-    ctx.drawImage(img1, 0, 0);
+  //   c.width = w;
+  //   c.height = h;
+  //   ctx = c.getContext('2d');
+  //   ctx.drawImage(img1, 0, 0);
 
-    //continue the image processing
-    let pixelArr = ctx.getImageData(0, 0, w, h).data;
+  //   //continue the image processing
+  //   let pixelArr = ctx.getImageData(0, 0, w, h).data;
 
-    let sample_size = 40;
+  //   let sample_size = 40;
 
-    for (let y = 0; y < h; y += sample_size) {
-      for (let x = 0; x < w; x += sample_size) {
-        let p = (x + (y*w)) * 4;
-        ctx.fillStyle = "rgba(" + pixelArr[p] + "," + pixelArr[p + 1] + "," + pixelArr[p + 2] + "," + pixelArr[p + 3] + ")";
-        ctx.fillRect(x, y, sample_size, sample_size);
-      }
-    }
+  //   for (let y = 0; y < h; y += sample_size) {
+  //     for (let x = 0; x < w; x += sample_size) {
+  //       let p = (x + (y*w)) * 4;
+  //       ctx.fillStyle = "rgba(" + pixelArr[p] + "," + pixelArr[p + 1] + "," + pixelArr[p + 2] + "," + pixelArr[p + 3] + ")";
+  //       ctx.fillRect(x, y, sample_size, sample_size);
+  //     }
+  //   }
 
-    let img2 = new Image();
-    img2.src = c.toDataURL();
-    img2.width = 800;
-    document.body.appendChild(img2);
+  //   let img2 = new Image();
+  //   img2.src = c.toDataURL();
+  //   img2.width = 800;
+  //   document.body.appendChild(img2);
 
-  };
+  // };
 
-  img1.src = document.getElementById("image1").src;
+  // img1.src = document.querySelector("#profilePic").src;
 
 }
 blurify();
