@@ -210,3 +210,8 @@ button[type=button]{
 a[type=button]{
     background-color: #823329 !important;
 }
+
+/* Pixel image */
+img {
+    image-rendering: pixelated;
+  }
