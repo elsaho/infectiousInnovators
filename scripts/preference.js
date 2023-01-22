@@ -192,7 +192,7 @@ function populateInfo() {
       })
       .then(() => {
         console.log("Document successfully updated!");
-        // window.location.assign("main.html");
+        window.location.assign("main.html");
       })
   }
   document.getElementById('preferenceFields').disabled = true;

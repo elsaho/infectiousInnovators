@@ -147,7 +147,6 @@ function populateInfo() {
         console.log("test");
         savePicture(currentUser.id)
         console.log("Document successfully updated!");
-        // window.location.assign("main.html");
       })
 
       currentUser.update({
