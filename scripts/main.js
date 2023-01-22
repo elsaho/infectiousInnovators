@@ -5,6 +5,7 @@ var likes;
 var minAge;
 var maxAge;
 var age;
+var dislikes;
 
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
@@ -19,20 +20,20 @@ firebase.auth().onAuthStateChanged(user => {
 });
 
 //new function by elsa
-async function filterCards() {
-  firebase.auth().onAuthStateChanged((user) => {
-  currentUser = db.collection("users").doc(user.uid)
-  currentUser.get()
-  .then(userDoc => {
-    console.log("cards being filtered");
-    var minAge = userDoc.data().minAge;
-    var maxAge = userDoc.data().maxAge;
-    var genderPref = userDoc.data().genderPref;
-    console.log(minAge);
-    console.log("im in the user doc promise? ", userDoc.data());
-  });
-  });
-}
+// async function filterCards() {
+//   firebase.auth().onAuthStateChanged((user) => {
+//   currentUser = db.collection("users").doc(user.uid)
+//   currentUser.get()
+//   .then(userDoc => {
+//     console.log("cards being filtered");
+//     var minAge = userDoc.data().minAge;
+//     var maxAge = userDoc.data().maxAge;
+//     var genderPref = userDoc.data().genderPref;
+//     console.log(minAge);
+//     console.log("im in the user doc promise? ", userDoc.data());
+//   });
+//   });
+// }
 
 
 
@@ -63,8 +64,7 @@ function displayCardProfile(collection) {
           snap.forEach(doc => { //iterate thru each doc
             ID.push(doc.data().ID_Name);
             var name = doc.data().name;
-            var age = doc.data().age;   
-     //danger below     
+            var age = doc.data().age;      
             // if (age < minAge | age > maxAge) {
             //   // main.reload();
             //   console.log(minAge);
@@ -104,6 +104,13 @@ function displayCardProfile(collection) {
               merge: true
             })
 
+            //dislike field
+            currentUser.set({
+              dislikes: firebase.firestore.FieldValue.arrayUnion(),
+            }, {
+              merge: true
+            })
+
             newcard.querySelector('.heart').id = "save-" + userID;
             newcard.querySelector('.heart').onclick = () => addToLikes(userID);
             currentUser.get().then(userDoc => {
@@ -134,10 +141,10 @@ displayCardProfile("profile");
 
 function addToLikes(id) {
     currentUser.get().then((userDoc) => {
-        like = userDoc.data().likes;
-        console.log(like);
+        likes = userDoc.data().likes;
+        console.log(likes);
 
-        if (like.includes(id)) {
+        if (likes.includes(id)) {
             console.log(id)
             currentUser
               .update({
@@ -165,6 +172,21 @@ function addToLikes(id) {
           }
     });
 
+}
+
+function dislike(id) {
+  currentUser.get().then((userDoc) => {
+    dislikes = userDoc.data().dislikes;
+
+    currentUser.set({
+      bookmarks: firebase.firestore.FieldValue.arrayUnion(id),
+    }, {
+      merge:true
+    })
+    .then(function ()  {
+      console.log("Disliked");
+    })
+  });
 }
 
 // function checkMatch() {
