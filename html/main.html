@@ -30,10 +30,26 @@
   <body>
     <!-- Top navbar -->
     <nav id="navbarPlaceholder"></nav>
-
+    <div class="container spacing-footer spacing-header pt-2 text-center lavender-blush">
+    <!-- Person Information template -->
+    <template id="taskCardTemplate">
+      <div class="card py-2 mx-2 middle-blue" style="width: 18rem;">
+        <div class="card-body text-center ">
+          <a class="btn onyx card-href card-title d-block">Get
+            Details</a>
+          <div class="text-center">
+            <p class="date d-block my-1">Date goes here</p>
+            <p class="timeStart d-inline">Start Time goes here</p>
+            <p class="timeEnd d-inline">End Time goes here</p>
+          </div>
+        </div>
+      </div>
+    </template>
+    
     <!-- // Bottom navbar -->
     <nav id="footerPlaceholder"></nav>
     <script src="/scripts/skeleton.js"></script>
+    <script src="/scripts/firebase.js"   ></script>
     <!-- <script src="/scripts/main.js"></script> -->
   </body>
 
