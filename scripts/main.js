@@ -89,7 +89,7 @@ function displayCardProfile(collection) {
     }
   });
 }
-displayCardProfile("test");
+displayCardProfile("profile");
 
 function addToLikes(id) {
     currentUser.get().then((userDoc) => {
@@ -126,4 +126,9 @@ function addToLikes(id) {
 
 }
 
-console.log("test");
+
+function blurify(){
+  const profileImage = document.querySelector(".standard-image");
+  
+
+}
