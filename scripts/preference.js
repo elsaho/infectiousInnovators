@@ -11,26 +11,34 @@ function populateInfo() {
           .then(userDoc => {
             var prefAge = userDoc.data().prefAge;
             var prefLocation = userDoc.data().prefLocation;
-            var prefGender = userDoc.data().prefGender;
+            var prefFemale = userDoc.data().prefFemale;
+            var prefMale = userDoc.data().prefMale;
+            var prefNonBinary = userDoc.data().prefNonBinary;
   
             if (prefAge != null) {
               document.getElementById("prefAge").value = prefAge;
             }
-            if (userLocation != null) {
+            if (prefLocation != null) {
               document.getElementById("prefLocation").value = prefLocation;
             }
-            if (prefGender != null) {
-              if (prefGender == "Female") {
-                $('.Female').prop('checked', true);
-              }
-              if (userGender == "Male") {
-                $('.Male').prop('checked', true);
-              }
-              if (userGender == "Non-binary") {
-                $('.nonBinary').prop('checked', true);
-              }
+
+            if (document.getElementById('prefMale').checked) {
+                document.getElementById("prefMale").value = true;
+            } else {
+                document.getElementById("prefMale").value = false;
             }
-  
+
+            if (document.getElementById('prefFemale').checked) {
+                document.getElementById("prefFemale").value = true;
+            } else {
+                document.getElementById("prefFemale").value = false;
+            }
+
+            if (document.getElementById('prefNonBinary').checked) {
+                document.getElementById("prefNonBinary").value = true;
+            } else {
+                document.getElementById("prefNonBinary").value = false;
+            }
           })
       } else {
         console.log("No user is signed in");
@@ -47,12 +55,16 @@ function populateInfo() {
   function saveUserPref() {  
     prefAge = document.getElementById('prefAge').value; 
     prefLocation = document.getElementById('prefLocation').value;
-    prefGender = document.querySelector('input[name="Gender"]:checked').value;
+    prefMale = document.getElementById('prefMale').value;
+    prefFemale = document.getElementById('prefFemale').value;
+    prefNonBinary = document.getElementById('prefNonBinary').value;
   
     currentUser.update({
         prefAge: prefAge,
         prefLocation: prefLocation,
-        prefGender: prefGender
+        prefMale: prefMale,
+        prefFemale: prefFemale,
+        prefNonBinary: prefNonBinary
       })
       .then(() => {
         console.log("Document successfully updated!");
