@@ -14,6 +14,7 @@ function populateInfo() {
             // var prefFemale = userDoc.data().prefFemale;
             // var prefMale = userDoc.data().prefMale;
             // var prefNonBinary = userDoc.data().prefNonBinary;
+            // var genderPref = userDoc.data().genderPref;
   
             if (prefAge != null) {
               document.getElementById("prefAge").value = prefAge;
@@ -22,7 +23,19 @@ function populateInfo() {
               document.getElementById("prefLocation").value = prefLocation;
             }
 
-            var values = [];
+          //   var genderKeys = ["prefMale", "prefFemale", "prefNonBinary"];
+          //   var genderVals = [null, null, null];
+          //   var genderObj = {};
+
+          //   for(var i = 0; i < genderKeys.length; i++){
+          //     if (document.getElementById(genderKeys[i]).checked = true) {
+          //       genderVals[i] = true;
+          //       genderObj[genderKeys[i]] = genderVals[i];
+          //     } else {
+          //       genderVals[i] = false;
+          //       genderObj[genderKeys[i]] = genderVals[i];
+          //     }
+          // }
 
             // const btn = document.querySelector('#btn');
             //     btn.addEventListener('click', (event) => {
@@ -30,36 +43,37 @@ function populateInfo() {
             //         checkboxes.forEach((checkbox) => {
             //         genders.push(checkbox.value);
             // });
-            // });   
+            // });
+
         
             // Below doesn't work
-            if (document.getElementById('prefMale').checked = true) {
-                document.getElementById("prefMale").value = true;
-                $('.prefMale').prop('checked', true);
-                document.querySelectorAll('input[id="prefMale"]:checked');
-            } else {
-                document.getElementById("prefMale").value = false;
-                document.getElementById("prefMale").checked = false;
-                $('.prefMale').prop('checked', false);
-            }
+            // if (document.getElementById('prefMale').checked = true) {
+            //     document.getElementById("prefMale").value = true;
+            //     $('.prefMale').prop('checked', true);
+            //     document.querySelectorAll('input[id="prefMale"]:checked');
+            // } else {
+            //     document.getElementById("prefMale").value = false;
+            //     document.getElementById("prefMale").checked = false;
+            //     $('.prefMale').prop('checked', false);
+            // }
 
-            if (document.getElementById('prefFemale').checked = true) {
-                document.getElementById("prefFemale").value = true;
-                $('.prefFemale').prop('checked', true);
-            } else {
-                document.getElementById("prefFemale").value = false;
-                document.getElementById("prefFemale").checked = false;
-                $('.prefFemale').prop('checked', false);
-            }
+            // if (document.getElementById('prefFemale').checked = true) {
+            //     document.getElementById("prefFemale").value = true;
+            //     $('.prefFemale').prop('checked', true);
+            // } else {
+            //     document.getElementById("prefFemale").value = false;
+            //     document.getElementById("prefFemale").checked = false;
+            //     $('.prefFemale').prop('checked', false);
+            // }
 
-            if (document.getElementById('prefNonBinary').checked = true) {
-                document.getElementById("prefNonBinary").value = true;
-                $('.prefNonBinary').prop('checked', true);
-            } else {
-                document.getElementById("prefNonBinary").value = false;
-                document.getElementById("prefNonBinary").checked = false;
-                $('.prefNonBinary').prop('checked', false);
-            }
+            // if (document.getElementById('prefNonBinary').checked = true) {
+            //     document.getElementById("prefNonBinary").value = true;
+            //     $('.prefNonBinary').prop('checked', true);
+            // } else {
+            //     document.getElementById("prefNonBinary").value = false;
+            //     document.getElementById("prefNonBinary").checked = false;
+            //     $('.prefNonBinary').prop('checked', false);
+            // }
           })
       } else {
         console.log("No user is signed in");

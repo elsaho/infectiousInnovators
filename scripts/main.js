@@ -1,17 +1,17 @@
 var currentUser;
 
 firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-      currentUser = db.collection("users").doc(user.uid); //global
-      console.log(currentUser);
-  
-      // the following functions are always called when someone is logged in
-    } else {
-      // No user is signed in.
-      console.log("No user is signed in");
-      window.location.href = "login.html";
-    }
-  });
+  if (user) {
+    currentUser = db.collection("users").doc(user.uid); //global
+    console.log(currentUser);
+
+    // the following functions are always called when someone is logged in
+  } else {
+    // No user is signed in.
+    console.log("No user is signed in");
+    window.location.href = "login.html";
+  }
+});
 
 
 // Used to display tasks on main page.
@@ -25,7 +25,7 @@ function displayCardProfile(collection) {
       console.log(uid);
       var ID = [];
       db.collection("users")
-      .limit(1)
+        .limit(1)
         .get()
         .then(snap => {
           var i = 1;  //if you want to use commented out section
@@ -57,23 +57,23 @@ function displayCardProfile(collection) {
             // newcard.querySelector('.card-title').setAttribute("class", "tTitle" + " btn onyx lavender-blush-text card-href card-title d-block");
             // newcard.querySelector('.timeStart').setAttribute("id", "tStart" + i);
             // newcard.querySelector('.timeEnd').setAttribute("id", "tEnd" + i);
-            
+
 
             //likes field created in Fire Store foe addToLikes()
             currentUser.set({
-                likes: firebase.firestore.FieldValue.arrayUnion(),
-              }, {
-                merge: true
+              likes: firebase.firestore.FieldValue.arrayUnion(),
+            }, {
+              merge: true
             })
 
             newcard.querySelector('.heart').id = "save-" + userID;
             newcard.querySelector('.heart').onclick = () => addToLikes(userID);
             currentUser.get().then(userDoc => {
-                var likes = userDoc.data().likes;
-                if (likes.includes(userID)) {
+              var likes = userDoc.data().likes;
+              if (likes.includes(userID)) {
                 document.getElementById('save-' + userID).innerText = 'favorite';
-                }
-              })
+              }
+            })
 
             //attach to gallery
             document.getElementById(collection + "-go-here").appendChild(newcard);
@@ -92,52 +92,78 @@ function displayCardProfile(collection) {
 displayCardProfile("profile");
 
 function addToLikes(id) {
-    currentUser.get().then((userDoc) => {
-        like = userDoc.data().likes;
-        console.log(like);
+  currentUser.get().then((userDoc) => {
+    like = userDoc.data().likes;
+    console.log(like);
 
-        if (like.includes(id)) {
-            console.log(id)
-            currentUser
-              .update({
-                likes: firebase.firestore.FieldValue.arrayRemove(id),
-              })
-              .then(function () {
-                console.log("This person is removed");
-                var iconID = "save-" + id;
-                console.log(iconID);
-                document.getElementById(iconID).innerText = 'favorite_border';
-              });
-          } else {
-            currentUser
-              .set({
-                likes: firebase.firestore.FieldValue.arrayUnion(id),
-              }, {
-                merge: true
-              })
-              .then(function () {
-                console.log("This person is added");
-                var iconID = "save-" + id;
-                console.log(iconID);
-                document.getElementById(iconID).innerText = 'favorite';
-              });
-          }
-    });
-
-}
-
-
-function blurify(){
-  const profileImage = document.querySelector(".standard-image");
-  let pixelArr = ctx.getImageData(0, 0, profileImage.width, profileImage.height).data;
-  let sample_size = 40;
-
-  for (let y = 0; y < h; y += sample_size) {
-    for (let x = 0; x < w; x += sample_size) {
-      let p = (x + (y*w)) * 4;
+    if (like.includes(id)) {
+      console.log(id)
+      currentUser
+        .update({
+          likes: firebase.firestore.FieldValue.arrayRemove(id),
+        })
+        .then(function () {
+          console.log("This person is removed");
+          var iconID = "save-" + id;
+          console.log(iconID);
+          document.getElementById(iconID).innerText = 'favorite_border';
+        });
+    } else {
+      currentUser
+        .set({
+          likes: firebase.firestore.FieldValue.arrayUnion(id),
+        }, {
+          merge: true
+        })
+        .then(function () {
+          console.log("This person is added");
+          var iconID = "save-" + id;
+          console.log(iconID);
+          document.getElementById(iconID).innerText = 'favorite';
+        });
     }
-  }
+  });
 
-  ctx.fillStyle = "rgba(" + pixelArr[p] + "," + pixelArr[p + 1] + "," + pixelArr[p + 2] + "," + pixelArr[p + 3] + ")";
-ctx.fillRect(x, y, sample_size, sample_size);
 }
+
+
+function blurify() {
+  const profileImage = document.querySelector(".profilePic");
+  let c = document.createElement("canvas");
+  let img1 = new Image();
+
+  img1.onload = function () {
+    document.getElementById("image1").remove();
+
+    w = img1.width;
+    h = img1.height;
+
+    c.width = w;
+    c.height = h;
+    ctx = c.getContext('2d');
+    ctx.drawImage(img1, 0, 0);
+
+    //continue the image processing
+    let pixelArr = ctx.getImageData(0, 0, w, h).data;
+
+    let sample_size = 40;
+
+    for (let y = 0; y < h; y += sample_size) {
+      for (let x = 0; x < w; x += sample_size) {
+        let p = (x + (y*w)) * 4;
+        ctx.fillStyle = "rgba(" + pixelArr[p] + "," + pixelArr[p + 1] + "," + pixelArr[p + 2] + "," + pixelArr[p + 3] + ")";
+        ctx.fillRect(x, y, sample_size, sample_size);
+      }
+    }
+
+    let img2 = new Image();
+    img2.src = c.toDataURL();
+    img2.width = 800;
+    document.body.appendChild(img2);
+
+  };
+
+  img1.src = document.getElementById("image1").src;
+
+}
+blurify();
