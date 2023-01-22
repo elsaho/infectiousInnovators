@@ -17,8 +17,11 @@ function populateInfo() {
             // var prefNonBinary = userDoc.data().prefNonBinary;
             // var genderPref = userDoc.data().genderPref;
   
-            if (prefAge != null) {
-              document.getElementById("prefAge").value = prefAge;
+            if (minAge != null) {
+              document.getElementById("prefAge").value = minAge;
+            }
+            if (maxAge != null) {
+              document.getElementById("prefAge").value = maxAge;
             }
             if (prefLocation != null) {
               document.getElementById("prefLocation").value = prefLocation;
@@ -192,7 +195,7 @@ function populateInfo() {
       })
       .then(() => {
         console.log("Document successfully updated!");
-        window.location.assign("main.html");
+        // window.location.assign("main.html");
       })
   }
   document.getElementById('preferenceFields').disabled = true;

@@ -4,7 +4,6 @@ firebase.auth().onAuthStateChanged(user => {
   if (user) {
     currentUser = db.collection("users").doc(user.uid); //global
     console.log(currentUser);
-
     // the following functions are always called when someone is logged in
   } else {
     // No user is signed in.
@@ -13,11 +12,32 @@ firebase.auth().onAuthStateChanged(user => {
   }
 });
 
+//new function by elsa
+function filterCards() {
+  firebase.auth().onAuthStateChanged((user) => {
+  currentUser = db.collection("users").doc(user.uid)
+  currentUser.get()
+  .then(userDoc => {
+    console.log("cards being filtered");
+    var minAge = userDoc.data().minAge;
+    var maxAge = userDoc.data().maxAge;
+    var genderPref = userDoc.data().genderPref;
+  });
+  });
+}
 
 // Used to display tasks on main page.
 function displayCardProfile(collection) {
   let cardTemplate = document.getElementById("displayPersonTemplate");
   firebase.auth().onAuthStateChanged((user) => {
+    currentUser = db.collection("users").doc(user.uid)
+    currentUser.get()
+      .then(userDoc => {
+    let minAge = userDoc.data().minAge;
+    let maxAge = userDoc.data().maxAge;
+    let genderPref = userDoc.data().genderPref;
+    console.log(minAge);
+  });
     if (user) {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
@@ -32,7 +52,11 @@ function displayCardProfile(collection) {
           snap.forEach(doc => { //iterate thru each doc
             ID.push(doc.data().ID_Name);
             var name = doc.data().name;
-            var age = doc.data().age;        // get value of the "name" key
+            var age = doc.data().age;   
+            //danger below     
+            if (age < minAge | age > maxAge) {
+              main.reload();
+            }
             var location = doc.data().location;
             var hook = doc.data().hook;
             var prompt1 = doc.data().prompt1;
@@ -40,6 +64,7 @@ function displayCardProfile(collection) {
             var userID = doc.data().userID;
             var picUrl = doc.data().profilePic;
             let newcard = cardTemplate.content.cloneNode(true);
+
 
             //update title and text and image
             newcard.querySelector('.name').innerHTML = name;
@@ -80,8 +105,8 @@ function displayCardProfile(collection) {
             i++;   //if you want to use commented out section
 
           })
-
         })
+      
       // ...
     } else {
       // User is signed out
