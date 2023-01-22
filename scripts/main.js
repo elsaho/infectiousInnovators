@@ -1,7 +1,5 @@
 var currentUser;
 var uid;
-var matchID;
-var likes;
 
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
@@ -73,7 +71,7 @@ function displayCardProfile(collection) {
             newcard.querySelector('.heart').id = "save-" + userID;
             newcard.querySelector('.heart').onclick = () => addToLikes(userID);
             currentUser.get().then(userDoc => {
-              var likes = userDoc.data().likes;
+              likes = userDoc.data().likes;
               if (likes.includes(userID)) {
                 document.getElementById('save-' + userID).innerText = 'favorite';
               }
@@ -96,15 +94,18 @@ function displayCardProfile(collection) {
 displayCardProfile("profile");
 
 function addToLikes(id) {
+  var matches;
+  var likes;
   currentUser.get().then((userDoc) => {
     likes = userDoc.data().likes;
-    console.log(likes);
+    
 
     if (likes.includes(id)) {
       console.log(id)
       currentUser
         .update({
           likes: firebase.firestore.FieldValue.arrayRemove(id),
+          matches: firebase.firestore.FieldValue.arrayRemove(id),
         })
         .then(function () {
           console.log("This person is removed");
@@ -116,11 +117,12 @@ function addToLikes(id) {
       currentUser
         .set({
           likes: firebase.firestore.FieldValue.arrayUnion(id),
+          matches: firebase.firestore.FieldValue.arrayUnion(id),
         }, {
           merge: true
         })
         .then(function () {
-         
+          checkMatch(id);
           console.log("This person is added");
           var iconID = "save-" + id;
           console.log(iconID);
@@ -130,40 +132,31 @@ function addToLikes(id) {
   });
 }
 
-function checkMatch() {
-  var match;
-    for (i = 0; i < likes.length; i++) {
-      matchID = likes[i];
-      match = db.collection("users").where("userID", "==", matchID);
-      
+function checkMatch(id) {
+  var matches;
 
-      db.collection("users").where("userID", "==", matchID)
-        .get().then(add => {
-          currentUser.set({
-              matches: firebase.firestore.FieldValue.arrayUnion(matchID),
-            }, {
-              merge: true
-            })
-            .then(function () {
-              console.log("You are a match!");
-              console.log(matchID);
-            });
-        })
-        match.get().then((doc) => {
+  currentUser.get().then((userDoc) => {
+    matches = userDoc.data().matches;
+    console.log(matches);
+    for (i = 0; i <matches.length; i++) {
+      var matchID = matches[i];
+      var match = db.collection("users").doc(matchID);
+        match.get().then((userDoc) => {
           match.set({
-              matches: firebase.firestore.FieldValue.arrayUnion(uid),
-            }, {
-              merge: true
-            })
-            .then(function () {
-              console.log("Romance Ahead!");
-            });
-        })
-      
-    }
+                matches: firebase.firestore.FieldValue.arrayUnion(uid),
+              }, {
+                merge: true
+              })
+              .then(function () {
+                console.log("Romance ahead!");
+                console.log(matchID);
+          });
+        });   
+    } 
+  });
+         
+    
 }
-// checkMatch();
-
 
 function blurify() {
   const profileImage = document.querySelector(".standard-image");
