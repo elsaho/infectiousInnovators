@@ -1,10 +1,16 @@
 var currentUser;
 var uid;
+var matchID;
+var likes;
+var minAge;
+var maxAge;
+var age;
+var dislikes;
 
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
     currentUser = db.collection("users").doc(user.uid); //global
-    console.log(currentUser);    
+    console.log(currentUser);
 
     // the following functions are always called when someone is logged in
   } else {
@@ -14,11 +20,36 @@ firebase.auth().onAuthStateChanged(user => {
   }
 });
 
+//new function by elsa
+// async function filterCards() {
+//   firebase.auth().onAuthStateChanged((user) => {
+//   currentUser = db.collection("users").doc(user.uid)
+//   currentUser.get()
+//   .then(userDoc => {
+//     console.log("cards being filtered");
+//     var minAge = userDoc.data().minAge;
+//     var maxAge = userDoc.data().maxAge;
+//     var genderPref = userDoc.data().genderPref;
+//     console.log(minAge);
+//     console.log("im in the user doc promise? ", userDoc.data());
+//   });
+//   });
+// }
 
-// Used to display tasks on main page.
+
+
+// Used to display users on main page.
 function displayCardProfile(collection) {
   let cardTemplate = document.getElementById("displayPersonTemplate");
   firebase.auth().onAuthStateChanged((user) => {
+    currentUser = db.collection("users").doc(user.uid)
+    currentUser.get()
+      .then(userDoc => {
+    var minAge = userDoc.data().minAge;
+    var maxAge = userDoc.data().maxAge;
+    var genderPref = userDoc.data().genderPref;
+    // console.log("im in the user doc promise? ", userDoc.data());
+  });
     if (user) {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
@@ -26,6 +57,7 @@ function displayCardProfile(collection) {
       console.log(uid);
       var ID = [];
       db.collection("users")
+        // .where("minAge", "==", age)
         .limit(1)
         .get()
         .then(snap => {
@@ -33,7 +65,11 @@ function displayCardProfile(collection) {
           snap.forEach(doc => { //iterate thru each doc
             ID.push(doc.data().ID_Name);
             var name = doc.data().name;
-            var age = doc.data().age; // get value of the "name" key
+            var age = doc.data().age;      
+            // if (age < minAge | age > maxAge) {
+            //   // main.reload();
+            //   console.log(minAge);
+            // }
             var location = doc.data().location;
             var hook = doc.data().hook;
             var prompt1 = doc.data().prompt1;
@@ -41,6 +77,7 @@ function displayCardProfile(collection) {
             var userID = doc.data().userID;
             var picUrl = doc.data().profilePic;
             let newcard = cardTemplate.content.cloneNode(true);
+
 
             //update title and text and image
             newcard.querySelector('.name').innerHTML = name;
@@ -68,6 +105,13 @@ function displayCardProfile(collection) {
               merge: true
             })
 
+            //dislike field
+            currentUser.set({
+              dislikes: firebase.firestore.FieldValue.arrayUnion(),
+            }, {
+              merge: true
+            })
+
             newcard.querySelector('.heart').id = "save-" + userID;
             newcard.querySelector('.heart').onclick = () => addToLikes(userID);
             currentUser.get().then(userDoc => {
@@ -82,8 +126,8 @@ function displayCardProfile(collection) {
             i++; //if you want to use commented out section
 
           })
-
         })
+      
       // ...
     } else {
       // User is signed out
@@ -148,6 +192,7 @@ function checkMatch(id) {
                 merge: true
               })
               .then(function () {
+                imageBlur.style.filter = "blur(0px)";
                 console.log("Romance ahead!");
                 console.log(matchID);
           });
@@ -158,7 +203,29 @@ function checkMatch(id) {
     
 }
 
-function blurify() {
+function dislike(id) {
+  currentUser.get().then((userDoc) => {
+    dislikes = userDoc.data().dislikes;
+
+    currentUser.set({
+      bookmarks: firebase.firestore.FieldValue.arrayUnion(id),
+    }, {
+      merge:true
+    })
+    .then(function ()  {
+      console.log("Disliked");
+    })
+  });
+}
+
+// function checkMatch() {
+//   var match;
+//     for (i = 0; i < likes.length; i++) {
+//       matchID = likes[i];
+//       match = db.collection("users").where("userID", "==", matchID);
+      
+
+function blurify(){
   const profileImage = document.querySelector(".standard-image");
   let pixelArr = ctx.getImageData(0, 0, profileImage.width, profileImage.height).data;
   let sample_size = 40;
