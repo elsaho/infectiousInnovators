@@ -26,6 +26,9 @@
 .spacing-header {
     margin-top: 92px;
 }
+.spacing-footer-big {
+    margin-bottom: 150px;
+}
 
 body {
     height: 100%;
