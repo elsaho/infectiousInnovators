@@ -81,11 +81,11 @@ function displayCardProfile(collection) {
 
             //update title and text and image
             newcard.querySelector('.name').innerHTML = name;
-            newcard.querySelector('.age').innerHTML = "age: " + age;
-            newcard.querySelector('.location').innerHTML = location;
-            newcard.querySelector('.hook').innerHTML = hook;
-            newcard.querySelector('.prompt1').innerHTML = prompt1;
-            newcard.querySelector('.prompt2').innerHTML = prompt2;
+            newcard.querySelector('.age').innerHTML = "Age: " + age;
+            newcard.querySelector('.location').innerHTML = "City: " + location;
+            newcard.querySelector('.hook').innerHTML = "Introduction: " + hook;
+            newcard.querySelector('.prompt1').innerHTML = "Fun fact about me: " + prompt1;
+            newcard.querySelector('.prompt2').innerHTML = "Looking for someone who: " + prompt2;
             const img = document.createElement('img');
             newcard.querySelector('.profilePic').appendChild(img).src = picUrl;
             img.className = "standard-image";
