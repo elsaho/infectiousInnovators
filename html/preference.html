@@ -20,6 +20,7 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
 
   <!-- Other libraries -->
@@ -33,37 +34,28 @@
   <div class="container spacing-footer spacing-header pt-2 text-center lavender-blush"></div>
   
     <!-- Body -->
-  <div class="container2">
+  <div class="container">
     <h1>Dating Preferences</h1>
     <form>
       <fieldset class="mb-3" id="preferenceFields" disabled>
         <div class="form-group">
             <!-- Fix to display range-->
-          <label>Age</label>
-          <input type="number" id="prefAge" class="form-control" min = "18" max = "100" placeholder="Your preferred age range"
-          step="2">
-          <!-- Fix above -->
+          <label>Age Range</label>
+          <input type="number" id="minAge" class="form-control" min = "18" max = "100" placeholder="Minimum Age"
+          step="1">
         </div>
+
+        <div class="form-group">
+        <input type="number" id="maxAge" class="form-control" min = "18" max = "100" placeholder="Maximum Age"
+        step="1">
+      </div>
+
         <div class="form-group">
           <label>Location</label>
           <input type="text" class="form-control" placeholder="Your preferred location" id="prefLocation">
         </div>
         
         <label>Gender<span style="display:inline-block; width: 20pt;"></span></label>
-        <!-- <div class="form-check form-check-inline">
-          <input class="form-check-input Male" type="radio" name="Gender" value="Male">
-          <label>Male</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input Female" type="radio" name="Gender" value="Female">
-          <label>Female</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input Non-binary" type="radio" name="Gender" value="Non-binary">
-          <label>Non-binary</label>
-        </div>
-       -->
-      
       <div class="form-check">
         <input class="form-check-input" type="checkbox" value="" id="prefMale" name = "prefGender">
         <label class="form-check-label" for="prefMale">

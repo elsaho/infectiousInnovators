@@ -22,11 +22,8 @@ firebase.auth().onAuthStateChanged(user => {
     if (user) {
       currentUser = db.collection("users").doc(user.uid); //global
       console.log(currentUser);
-      currentMatches = db.collection("users").doc(user.uid).get();
-      console.log(currentMatches);
-  
-      // the following functions are always called when someone is logged in
       populateMatches();
+    
     } else {
       // No user is signed in.
       console.log("No user is signed in");
@@ -34,9 +31,37 @@ firebase.auth().onAuthStateChanged(user => {
     }
   });
 
-  function populateMatches(){
-    
-  }
-  
+ 
+
+  function populateMatches(id) {
+    currentUser.get().then((userDoc) => {
+        matchList = userDoc.data().matches;
+        console.log(matchList);
+        makeCardMatchesFromTemplate(matchList);
+
+    });
+
+
+}
+
+function makeCardMatchesFromTemplate(arg) {
+    for (i = 0; i < arg.length; i++) {
+        console.log("im inside the loop lol", arg[i]);
+        db.collection("users").where("userID", "==", arg[i])
+    .get()
+    .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
+        });
+    })
+    .catch((error) => {
+        console.log("Error getting documents: ", error);
+    });
+    }
+ }
+ 
+
+
 
 

@@ -9,7 +9,8 @@ function populateInfo() {
   
         currentUser.get()
           .then(userDoc => {
-            var prefAge = userDoc.data().prefAge;
+            var minAge = userDoc.data().minAge;
+            var maxAge = userDoc.data().maxAge;
             var prefLocation = userDoc.data().prefLocation;
             // var prefFemale = userDoc.data().prefFemale;
             // var prefMale = userDoc.data().prefMale;
@@ -23,29 +24,85 @@ function populateInfo() {
               document.getElementById("prefLocation").value = prefLocation;
             }
 
-          //   var genderKeys = ["prefMale", "prefFemale", "prefNonBinary"];
-          //   var genderVals = [null, null, null];
-          //   var genderObj = {};
+            //Gender??? below?
+            //Gender preference field created in Firestore
+            currentUser.set({
+              genderPref: firebase.firestore.FieldValue.arrayUnion(),
+            }, {
+              merge: true
+            })
 
-          //   for(var i = 0; i < genderKeys.length; i++){
-          //     if (document.getElementById(genderKeys[i]).checked = true) {
-          //       genderVals[i] = true;
-          //       genderObj[genderKeys[i]] = genderVals[i];
-          //     } else {
-          //       genderVals[i] = false;
-          //       genderObj[genderKeys[i]] = genderVals[i];
-          //     }
-          // }
+            // var genderPref = userDoc.data().genderPref;
 
-            // const btn = document.querySelector('#btn');
-            //     btn.addEventListener('click', (event) => {
-            //         let checkboxes = document.querySelectorAll('input[id="prefMale"]:checked');
-            //         checkboxes.forEach((checkbox) => {
-            //         genders.push(checkbox.value);
-            // });
-            // });
+            if (document.getElementById('prefMale').checked = true) {
+                currentUser
+                .set({
+                  genderPref: firebase.firestore.FieldValue.arrayUnion("male"),
+                }, {
+                  merge: true
+                })
+            } else {
+              currentUser
+              .update({
+                genderPref: firebase.firestore.FieldValue.arrayRemove("male"),
+              })
+              .then(function () {
+                document.getElementById("prefMale").checked = false;
+                console.log("Male preference is removed");
+              });
+            }
 
-        
+            if (document.getElementById('prefFemale').checked = true) {
+              currentUser
+              .set({
+                genderPref: firebase.firestore.FieldValue.arrayUnion("female"),
+              }, {
+                merge: true
+              })
+            } else {
+              currentUser.update({
+                genderPref: firebase.firestore.FieldValue.arrayRemove("female")
+              });
+            }
+
+            if (document.getElementById('prefNonBinary').checked = true) {
+              currentUser
+              .set({
+                genderPref: firebase.firestore.FieldValue.arrayUnion("nonbinary"),
+              }, {
+                merge: true
+              })
+            } else {
+              currentUser.update({
+                genderPref: firebase.firestore.FieldValue.arrayRemove("nonbinary")
+              });
+            }
+
+            
+
+            // function addToGenderPref(p) {
+            //   currentUser.get().then((userDoc) => {
+            //     pref = userDoc.data().genderPref;
+    
+            //     if (pref.includes(p)) {
+            //       currentUser
+            //         .set({
+            //           genderPref: firebase.firestore.FieldValue.arrayUnion(p),
+            //         });
+            //     } else {
+            //       currentUser
+            //         .update({
+            //           genderPref: firebase.firestore.FieldValue.arrayUnion(p),
+            //         }, {
+            //           merge: true
+            //         });
+            //     }
+            //   });
+            
+            // }
+
+
+
             // Below doesn't work
             // if (document.getElementById('prefMale').checked = true) {
             //     document.getElementById("prefMale").value = true;
@@ -74,6 +131,32 @@ function populateInfo() {
             //     document.getElementById("prefNonBinary").checked = false;
             //     $('.prefNonBinary').prop('checked', false);
             // }
+            
+
+          //   var genderKeys = ["prefMale", "prefFemale", "prefNonBinary"];
+          //   var genderVals = [null, null, null];
+          //   var genderObj = {};
+
+          //   for(var i = 0; i < genderKeys.length; i++){
+          //     if (document.getElementById(genderKeys[i]).checked = true) {
+          //       genderVals[i] = true;
+          //       genderObj[genderKeys[i]] = genderVals[i];
+          //     } else {
+          //       genderVals[i] = false;
+          //       genderObj[genderKeys[i]] = genderVals[i];
+          //     }
+          // }
+
+            // const btn = document.querySelector('#btn');
+            //     btn.addEventListener('click', (event) => {
+            //         let checkboxes = document.querySelectorAll('input[id="prefMale"]:checked');
+            //         checkboxes.forEach((checkbox) => {
+            //         genders.push(checkbox.value);
+            // });
+            // });
+
+        
+   
           })
       } else {
         console.log("No user is signed in");
@@ -88,21 +171,24 @@ function populateInfo() {
   }
   
   function saveUserPref() {  
-    prefAge = document.getElementById('prefAge').value; 
+    minAge = document.getElementById('minAge').value; 
+    maxAge = document.getElementById('maxAge').value; 
     prefLocation = document.getElementById('prefLocation').value;
-    prefMale = document.querySelector('input[name="prefGender"]:checked').value;
-    prefFemale = document.querySelector('input[name="prefGender"]:checked').value;
-    prefNonBinary = document.querySelector('input[name="prefGender"]:checked').value;
+    // prefMale = document.querySelector('input[name="prefGender"]:checked').value;
+    // prefFemale = document.querySelector('input[name="prefGender"]:checked').value;
+    // prefNonBinary = document.querySelector('input[name="prefGender"]:checked').value;
     // prefMale = document.getElementById('prefMale').value;
     // prefFemale = document.getElementById('prefFemale').value;
     // prefNonBinary = document.getElementById('prefNonBinary').value;
   
     currentUser.update({
-        prefAge: prefAge,
+        minAge: minAge,
+        maxAge: maxAge,
         prefLocation: prefLocation,
-        prefMale: prefMale,
-        prefFemale: prefFemale,
-        prefNonBinary: prefNonBinary
+        // genderPref: genderPref
+        // prefMale: prefMale,
+        // prefFemale: prefFemale,
+        // prefNonBinary: prefNonBinary
       })
       .then(() => {
         console.log("Document successfully updated!");
