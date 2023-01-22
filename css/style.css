@@ -1,0 +1,171 @@
+/* Icon sizes */
+.material-icons.md-18 {
+    font-size: 18px;
+}
+
+.material-icons.md-24 {
+    font-size: 24px;
+}
+
+.material-icons.md-36 {
+    font-size: 36px;
+}
+
+.material-icons.md-48 {
+    font-size: 48px;
+}
+
+/* Spacing to make up for fixed footer 
+   This allows you to properly scroll */
+.spacing-footer {
+    margin-bottom: 75px;
+}
+
+.spacing-header {
+    margin-top: 92px;
+}
+
+body {
+    height: 100%;
+    background-color: rgb(255, 243, 243);
+}
+
+.light-grey {
+    background-color: rgb(223, 223, 223);
+}
+
+.material-icons {
+    cursor: pointer;
+}
+
+.grey {
+    background-color: #DCDCD4;
+}
+
+/* To prevent touch to search*/
+.unselectable {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+i {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#CreateTasks,
+#CreateActivities {
+    cursor: pointer;
+}
+
+
+
+/* COLORS */
+
+/* COLOR PALETTE COLORS */
+.dark-turquoise {
+    background-color: #52dee5;
+}
+
+.dark-turquoise-text {
+    color: #52dee5;
+}
+
+.middle-blue {
+    background-color: #92DCE5;
+}
+
+.middle-blue-text {
+    color: #92DCE5;
+}
+
+.grey-web {
+    background-color: #7c7c7c;
+}
+
+.grey-web-text {
+    color: #7c7c7c;
+}
+
+.lavender-blush {
+    background-color: #eee5e9;
+}
+
+.lavender-blush-text {
+    color: #eee5e9;
+}
+
+.onyx {
+    background-color: #383d3b;
+}
+
+.onyx-text {
+    color: #383d3b;
+}
+
+.form-control:disabled {
+    background-color: #eee5e9;
+}
+
+
+/* other colors */
+
+/* color for any feature that is not implemented */
+.unavailable {
+    color: #909090;
+}
+
+/* for extremely faded out text */
+.greyText {
+    color: #cacaca;
+}
+
+html,
+body {
+    background-color: #eee5e9;
+}
+
+.btn:hover {
+    color: #eee5e9;
+}
+
+/* css for cursor pointer */
+#cursor {
+    cursor: pointer;
+}
+
+#cursor1 {
+    cursor: pointer;
+}
+
+#cursor2 {
+    cursor: pointer;
+}
+
+#settings {
+    cursor: pointer;
+}
+
+#history {
+    cursor: pointer;
+}
+
+#favorites {
+    cursor: pointer;
+}
+
+#logout {
+    cursor: pointer;
+}
+
+.border {
+    cursor: pointer;
+}
+
+.justify-self-center{
+    justify-self: end;
+}
