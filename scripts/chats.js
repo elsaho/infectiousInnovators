@@ -1,25 +1,17 @@
-var currentUser;
 
 // Used to make divs clickable, current changes inner html to test and print
+
 
 async function listenPlease() {
 var clickedChat = document.querySelectorAll('.clickableClass');
 console.log("tyring to print the nodelist", clickedChat);
 clickedChat.forEach((matchBox)=> {  matchBox.addEventListener('click', function(event) {
-    document.getElementById("clickableID").innerHTML = "YOU CLICKED ONe OF THE MATCHES TOP ONE WILL CHANGE !"
+    document.getElementById("clickableID").innerHTML = "Now displaying your chat!";
+    console.log("this id ? is", this.id);
     
 
 
 });
-// var currentChat = document.querySelector('.clickableClass');
-
-// currentChat.addEventListener('click', function(event) {
-//     document.getElementById("clickableID").innerHTML = "YOU CLICKED ME!"
-//     console.log("the console log message", this.id);
-
-// });
-
-
 })
 }
 
@@ -66,11 +58,13 @@ async function makeCardMatchesFromTemplate(arg) {
     .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
             var name = doc.data().name;
+            var matchId = doc.id;
+            console.log("the match Id is", matchId);
             console.log("tyring to print the name", name);
             console.log(doc.id, " => ", doc.data());
             let matchCard = parkingspotCardTemplate.content.cloneNode(true);
             matchCard.querySelector(".nameClass").innerHTML = name;
-            parkingspotCardGroup.appendChild(matchCard).then(listenPlease());;
+            parkingspotCardGroup.appendChild(matchCard).then(listenPlease());
         });
     })
     .catch((error) => {
