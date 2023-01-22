@@ -2,6 +2,9 @@ var currentUser;
 var uid;
 var matchID;
 var likes;
+var minAge;
+var maxAge;
+var age;
 
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
@@ -16,7 +19,7 @@ firebase.auth().onAuthStateChanged(user => {
 });
 
 //new function by elsa
-function filterCards() {
+async function filterCards() {
   firebase.auth().onAuthStateChanged((user) => {
   currentUser = db.collection("users").doc(user.uid)
   currentUser.get()
@@ -25,21 +28,25 @@ function filterCards() {
     var minAge = userDoc.data().minAge;
     var maxAge = userDoc.data().maxAge;
     var genderPref = userDoc.data().genderPref;
+    console.log(minAge);
+    console.log("im in the user doc promise? ", userDoc.data());
   });
   });
 }
 
-// Used to display tasks on main page.
+
+
+// Used to display users on main page.
 function displayCardProfile(collection) {
   let cardTemplate = document.getElementById("displayPersonTemplate");
   firebase.auth().onAuthStateChanged((user) => {
     currentUser = db.collection("users").doc(user.uid)
     currentUser.get()
       .then(userDoc => {
-    let minAge = userDoc.data().minAge;
-    let maxAge = userDoc.data().maxAge;
-    let genderPref = userDoc.data().genderPref;
-    console.log(minAge);
+    var minAge = userDoc.data().minAge;
+    var maxAge = userDoc.data().maxAge;
+    var genderPref = userDoc.data().genderPref;
+    // console.log("im in the user doc promise? ", userDoc.data());
   });
     if (user) {
       // User is signed in, see docs for a list of available properties
@@ -48,6 +55,7 @@ function displayCardProfile(collection) {
       console.log(uid);
       var ID = [];
       db.collection("users")
+        // .where("minAge", "==", age)
         .limit(1)
         .get()
         .then(snap => {
@@ -57,9 +65,10 @@ function displayCardProfile(collection) {
             var name = doc.data().name;
             var age = doc.data().age;   
      //danger below     
-            if (age < minAge | age > maxAge) {
-              main.reload();
-            }
+            // if (age < minAge | age > maxAge) {
+            //   // main.reload();
+            //   console.log(minAge);
+            // }
             var location = doc.data().location;
             var hook = doc.data().hook;
             var prompt1 = doc.data().prompt1;
