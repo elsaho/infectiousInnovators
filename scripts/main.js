@@ -129,6 +129,15 @@ function addToLikes(id) {
 
 function blurify(){
   const profileImage = document.querySelector(".standard-image");
-  
+  let pixelArr = ctx.getImageData(0, 0, profileImage.width, profileImage.height).data;
+  let sample_size = 40;
 
+  for (let y = 0; y < h; y += sample_size) {
+    for (let x = 0; x < w; x += sample_size) {
+      let p = (x + (y*w)) * 4;
+    }
+  }
+
+  ctx.fillStyle = "rgba(" + pixelArr[p] + "," + pixelArr[p + 1] + "," + pixelArr[p + 2] + "," + pixelArr[p + 3] + ")";
+ctx.fillRect(x, y, sample_size, sample_size);
 }
