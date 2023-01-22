@@ -6,7 +6,7 @@ var likes;
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
     currentUser = db.collection("users").doc(user.uid); //global
-    console.log(currentUser);
+    console.log(currentUser);    
 
     // the following functions are always called when someone is logged in
   } else {
@@ -46,13 +46,13 @@ function displayCardProfile(collection) {
 
             //update title and text and image
             newcard.querySelector('.name').innerHTML = name;
-            newcard.querySelector('.age').innerHTML = "Age: " + age;
-            newcard.querySelector('.location').innerHTML = "City: " + location;
-            newcard.querySelector('.hook').innerHTML = "About: " + hook;
-            newcard.querySelector('.prompt1').innerHTML = "Fun fact: " + prompt1;
-            newcard.querySelector('.prompt2').innerHTML = "Wants someone who: " + prompt2;
+            newcard.querySelector('.age').innerHTML = "age: " + age;
+            newcard.querySelector('.location').innerHTML = location;
+            newcard.querySelector('.hook').innerHTML = hook;
+            newcard.querySelector('.prompt1').innerHTML = prompt1;
+            newcard.querySelector('.prompt2').innerHTML = prompt2;
             const img = document.createElement('img');
-            newcard.querySelector('#profilePic').appendChild(img).src = picUrl;
+            newcard.querySelector('.profilePic').appendChild(img).src = picUrl;
             img.className = "standard-image";
             //give unique ids to all elements for future use
             // newcard.querySelector('.date').setAttribute("id", "tdate" + i);
@@ -75,9 +75,6 @@ function displayCardProfile(collection) {
             currentUser.get().then(userDoc => {
               var likes = userDoc.data().likes;
               if (likes.includes(userID)) {
-              var likes = userDoc.data().likes;
-              }
-              if (likes.includes(userID)) {
                 document.getElementById('save-' + userID).innerText = 'favorite';
               }
             })
@@ -99,90 +96,86 @@ function displayCardProfile(collection) {
 displayCardProfile("profile");
 
 function addToLikes(id) {
-    currentUser.get().then((userDoc) => {
-        like = userDoc.data().likes;
-        console.log(like);
+  currentUser.get().then((userDoc) => {
+    likes = userDoc.data().likes;
+    console.log(likes);
 
-        if (like.includes(id)) {
-            console.log(id)
-            currentUser
-              .update({
-                likes: firebase.firestore.FieldValue.arrayRemove(id),
-              })
-              .then(function () {
-                console.log("This person is removed");
-                var iconID = "save-" + id;
-                console.log(iconID);
-                document.getElementById(iconID).innerText = 'favorite_border';
-              });
-          } else {
-            currentUser
-              .set({
-                likes: firebase.firestore.FieldValue.arrayUnion(id),
-              }, {
-                merge: true
-              })
-              .then(function () {
-                console.log("This person is added");
-                var iconID = "save-" + id;
-                console.log(iconID);
-                document.getElementById(iconID).innerText = 'favorite';
-              });
-          }
-    });
-
+    if (likes.includes(id)) {
+      console.log(id)
+      currentUser
+        .update({
+          likes: firebase.firestore.FieldValue.arrayRemove(id),
+        })
+        .then(function () {
+          console.log("This person is removed");
+          var iconID = "save-" + id;
+          console.log(iconID);
+          document.getElementById(iconID).innerText = 'favorite_border';
+        });
+    } else {
+      currentUser
+        .set({
+          likes: firebase.firestore.FieldValue.arrayUnion(id),
+        }, {
+          merge: true
+        })
+        .then(function () {
+         
+          console.log("This person is added");
+          var iconID = "save-" + id;
+          console.log(iconID);
+          document.getElementById(iconID).innerText = 'favorite';
+        });
+    }
+  });
 }
 
-// function checkMatch() {
-//   var match;
-//     for (i = 0; i < likes.length; i++) {
-//       matchID = likes[i];
-//       match = db.collection("users").where("userID", "==", matchID);
+function checkMatch() {
+  var match;
+    for (i = 0; i < likes.length; i++) {
+      matchID = likes[i];
+      match = db.collection("users").where("userID", "==", matchID);
       
 
-function blurify(){
+      db.collection("users").where("userID", "==", matchID)
+        .get().then(add => {
+          currentUser.set({
+              matches: firebase.firestore.FieldValue.arrayUnion(matchID),
+            }, {
+              merge: true
+            })
+            .then(function () {
+              console.log("You are a match!");
+              console.log(matchID);
+            });
+        })
+        match.get().then((doc) => {
+          match.set({
+              matches: firebase.firestore.FieldValue.arrayUnion(uid),
+            }, {
+              merge: true
+            })
+            .then(function () {
+              console.log("Romance Ahead!");
+            });
+        })
+      
+    }
+}
+// checkMatch();
+
+
+function blurify() {
   const profileImage = document.querySelector(".standard-image");
-
-  // let c = document.createElement("canvas");
-  // let img1 = new Image();
-  // let source;
-  // img1.onload = function () {
-  //   document.querySelector("#profilePic").remove();
-
-  //   w = img1.width;
-  //   h = img1.height;
-
-  //   c.width = w;
-  //   c.height = h;
-  //   ctx = c.getContext('2d');
-  //   ctx.drawImage(img1, 0, 0);
-
-  //   //continue the image processing
-  //   let pixelArr = ctx.getImageData(0, 0, w, h).data;
-
-  //   let sample_size = 40;
-
-  //   for (let y = 0; y < h; y += sample_size) {
-  //     for (let x = 0; x < w; x += sample_size) {
-  //       let p = (x + (y*w)) * 4;
-  //       ctx.fillStyle = "rgba(" + pixelArr[p] + "," + pixelArr[p + 1] + "," + pixelArr[p + 2] + "," + pixelArr[p + 3] + ")";
-  //       ctx.fillRect(x, y, sample_size, sample_size);
-  //     }
-  //   }
-
-  //   let img2 = new Image();
-  //   img2.src = c.toDataURL();
-  //   img2.width = 800;
-  //   document.body.appendChild(img2);
-
-  // };
+  let pixelArr = ctx.getImageData(0, 0, profileImage.width, profileImage.height).data;
+  let sample_size = 40;
 
   for (let y = 0; y < h; y += sample_size) {
     for (let x = 0; x < w; x += sample_size) {
-      let p = (x + (y*w)) * 4;
+      let p = (x + (y * w)) * 4;
     }
   }
 
   ctx.fillStyle = "rgba(" + pixelArr[p] + "," + pixelArr[p + 1] + "," + pixelArr[p + 2] + "," + pixelArr[p + 3] + ")";
-ctx.fillRect(x, y, sample_size, sample_size);
+  ctx.fillRect(x, y, sample_size, sample_size);
 }
