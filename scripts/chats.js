@@ -8,8 +8,6 @@ function listenPlease() {
         matchBox.addEventListener('click', function (event) {
             document.getElementById("clickableID").innerHTML = "YOU CLICKED ONe OF THE MATCHES TOP ONE WILL CHANGE !"
 
-
-
         });
     });
 }
@@ -26,7 +24,6 @@ firebase.auth().onAuthStateChanged(user => {
         currentUser = db.collection("users").doc(user.uid); //global
         console.log(currentUser);
         populateMatches();
-
     } else {
         // No user is signed in.
         console.log("No user is signed in");
@@ -68,6 +65,7 @@ function makeCardMatchesFromTemplate(arg) {
             .catch((error) => {
                 console.log("Error getting documents: ", error);
             });
-
+            
     }
+
 }
