@@ -6,7 +6,6 @@ firebase.auth().onAuthStateChanged(user => {
       console.log(currentUser);
   
       // the following functions are always called when someone is logged in
-      populateRidesInfo();
     } else {
       // No user is signed in.
       console.log("No user is signed in");
@@ -14,40 +13,7 @@ firebase.auth().onAuthStateChanged(user => {
     }
   });
 
-function addToLike(id) {
-    currentUser.get().then((userDoc) => {
-        like = userDoc.data().likes;
-        console.log(like);
 
-        if (like.includes(id)) {
-            console.log(id)
-            currentUser
-              .update({
-                likes: firebase.firestore.FieldValue.arrayRemove(id),
-              })
-              .then(function () {
-                console.log("This bookmark is removed");
-                var iconID = "save-" + id;
-                console.log(iconID);
-                document.getElementById(iconID).innerText = 'favorite_border';
-              });
-          } else {
-            currentUser
-              .set({
-                bookmarks: firebase.firestore.FieldValue.arrayUnion(id),
-              }, {
-                merge: true
-              })
-              .then(function () {
-                console.log("This person is added");
-                var iconID = "save-" + id;
-                console.log(iconID);
-                document.getElementById(iconID).innerText = 'favorite';
-              });
-          }
-    });
-
-}
 // Used to display tasks on main page.
 function displayCardTasks(collection) {
   let cardTemplate = document.getElementById("displayPersonTemplate");
@@ -71,6 +37,7 @@ function displayCardTasks(collection) {
             var hook = doc.data().hook;
             var prompt1 = doc.data().prompt1;
             var prompt2 = doc.data().prompt2;
+            var userID = doc.data().userID;
             let newcard = cardTemplate.content.cloneNode(true);
 
             //update title and text and image
@@ -87,6 +54,23 @@ function displayCardTasks(collection) {
             // newcard.querySelector('.card-title').setAttribute("class", "tTitle" + " btn onyx lavender-blush-text card-href card-title d-block");
             // newcard.querySelector('.timeStart').setAttribute("id", "tStart" + i);
             // newcard.querySelector('.timeEnd').setAttribute("id", "tEnd" + i);
+            
+
+            //likes field created in Fire Store foe addToLikes()
+            currentUser.set({
+                likes: firebase.firestore.FieldValue.arrayUnion(),
+              }, {
+                merge: true
+            })
+
+            newcard.querySelector('.heart').id = "save-" + userID;
+            newcard.querySelector('.heart').onclick = () => addToLikes(userID);
+            currentUser.get().then(userDoc => {
+                var likes = userDoc.data().likes;
+                if (likes.includes(userID)) {
+                document.querySelector('.heart').innerText = 'favorite';
+                }
+              })
 
             //attach to gallery
             document.getElementById(collection + "-go-here").appendChild(newcard);
@@ -103,5 +87,40 @@ function displayCardTasks(collection) {
   });
 }
 displayCardTasks("test");
+
+function addToLikes(id) {
+    currentUser.get().then((userDoc) => {
+        like = userDoc.data().likes;
+        console.log(like);
+
+        if (like.includes(id)) {
+            console.log(id)
+            currentUser
+              .update({
+                likes: firebase.firestore.FieldValue.arrayRemove(id),
+              })
+              .then(function () {
+                console.log("This person is removed");
+                var iconID = "save-" + id;
+                console.log(iconID);
+                document.querySelector('.heart').innerText = 'favorite_border';
+              });
+          } else {
+            currentUser
+              .set({
+                likes: firebase.firestore.FieldValue.arrayUnion(id),
+              }, {
+                merge: true
+              })
+              .then(function () {
+                console.log("This person is added");
+                var iconID = "save-" + id;
+                console.log(iconID);
+                document.querySelector('.heart').innerText = 'favorite';
+              });
+          }
+    });
+
+}
 
 console.log("test");
