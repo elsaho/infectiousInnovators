@@ -117,7 +117,7 @@ function populateInfo() {
     userName = document.getElementById('nameInput').value; 
     userAge = document.getElementById('ageInput').value; 
     userLocation = document.getElementById('locationInput').value;
-    // userGender = document.querySelector('input[name="Gender"]:checked').value;
+    userGender = document.querySelector('input[name="Gender"]:checked').value;
   
     currentUser.update({
         name: userName,
@@ -130,6 +130,10 @@ function populateInfo() {
         savePicture(currentUser.id)
         console.log("Document successfully updated!");
         // window.location.assign("main.html");
+      })
+
+      currentUser.update({
+        gender: userGender
       })
   }
 
