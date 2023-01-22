@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Pixel Perfect Match</title>
+  <!-- <link rel="icon" type="image/x-icon" href="/images/favicon.ico"> -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+  </script>
+
+  <!-- Firebase, CSS, JS, JQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+
+  <!-- Other libraries -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <!-- NavBar -->
+  <nav id="navbarPlaceholder"></nav>
+  <div class="container spacing-footer spacing-header pt-2 text-center lavender-blush">
+  
+    <!-- Body -->
+  <div class="container2">
+    <h1>Dating Preferences</h1>
+    <form>
+      <fieldset class="mb-3" id="preferenceFields" disabled>
+        <div class="form-group">
+            <!-- Fix to display range-->
+          <label>Age</label>
+          <input type="number" id="prefAge" class="form-control" min = "18" max = "100" placeholder="Your preferred age range"
+          step="2">
+          <!-- Fix above -->
+        </div>
+        <div class="form-group">
+          <label>Location</label>
+          <input type="text" class="form-control" placeholder="Your preferred location" id="prefLocation">
+        </div>
+        
+        <label>Your gender preference<span style="display:inline-block; width: 20pt;"></span></label>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input Male" type="radio" name="Gender" value="Male">
+          <label>Male</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input Female" type="radio" name="Gender" value="Female">
+          <label>Female</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input Non-binary" type="radio" name="Gender" value="Non-binary">
+          <label>Non-binary</label>
+        </div>
+      </fieldset>
+      <div class="d-flex justify-content-end mt-5">
+        <button type="button" class="btn btn-info" onclick="editUserPref()">Edit</button>
+        <span style="width: 10px"></span>
+        <button type="button" class="btn btn-info" onclick="saveUserPref()">Save</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- our own footer goes here-->
+  <nav id="footerPlaceholder"></nav>
+
+  <!-- Scripts -->
+  <script src="/scripts/firebase.js"   ></script>
+  <script src="/scripts/skeleton.js"></script>
+  <script src="/scripts/preference.js"></script>
+
+</body>
+</html>
