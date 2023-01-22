@@ -76,10 +76,9 @@ function displayCardProfile(collection) {
               var likes = userDoc.data().likes;
               if (likes.includes(userID)) {
               var likes = userDoc.data().likes;
+              }
               if (likes.includes(userID)) {
                 document.getElementById('save-' + userID).innerText = 'favorite';
-              }
-            })
               }
             })
 
@@ -100,76 +99,48 @@ function displayCardProfile(collection) {
 displayCardProfile("profile");
 
 function addToLikes(id) {
-  currentUser.get().then((userDoc) => {
-    likes = userDoc.data().likes;
-    console.log(likes);
+    currentUser.get().then((userDoc) => {
+        like = userDoc.data().likes;
+        console.log(like);
 
-    if (like.includes(id)) {
-      console.log(id)
-      currentUser
-        .update({
-          likes: firebase.firestore.FieldValue.arrayRemove(id),
-        })
-        .then(function () {
-          console.log("This person is removed");
-          var iconID = "save-" + id;
-          console.log(iconID);
-          document.getElementById(iconID).innerText = 'favorite_border';
-        });
-    } else {
-      currentUser
-        .set({
-          likes: firebase.firestore.FieldValue.arrayUnion(id),
-        }, {
-          merge: true
-        })
-        .then(function () {
-          console.log("This person is added");
-          var iconID = "save-" + id;
-          console.log(iconID);
-          document.getElementById(iconID).innerText = 'favorite';
-        });
-    }
-  });
+        if (like.includes(id)) {
+            console.log(id)
+            currentUser
+              .update({
+                likes: firebase.firestore.FieldValue.arrayRemove(id),
+              })
+              .then(function () {
+                console.log("This person is removed");
+                var iconID = "save-" + id;
+                console.log(iconID);
+                document.getElementById(iconID).innerText = 'favorite_border';
+              });
+          } else {
+            currentUser
+              .set({
+                likes: firebase.firestore.FieldValue.arrayUnion(id),
+              }, {
+                merge: true
+              })
+              .then(function () {
+                console.log("This person is added");
+                var iconID = "save-" + id;
+                console.log(iconID);
+                document.getElementById(iconID).innerText = 'favorite';
+              });
+          }
+    });
 
 }
 
-function checkMatch() {
-  var match;
-    for (i = 0; i < likes.length; i++) {
-      matchID = likes[i];
-      match = db.collection("users").where("userID", "==", matchID);
+// function checkMatch() {
+//   var match;
+//     for (i = 0; i < likes.length; i++) {
+//       matchID = likes[i];
+//       match = db.collection("users").where("userID", "==", matchID);
       
 
-      db.collection("users").where("userID", "==", matchID)
-        .get().then(add => {
-          currentUser.set({
-              matches: firebase.firestore.FieldValue.arrayUnion(matchID),
-            }, {
-              merge: true
-            })
-            .then(function () {
-              console.log("You are a match!");
-              console.log(matchID);
-            });
-        })
-        match.get().then((doc) => {
-          match.set({
-              matches: firebase.firestore.FieldValue.arrayUnion(uid),
-            }, {
-              merge: true
-            })
-            .then(function () {
-              console.log("Romance Ahead!");
-            });
-        })
-      
-    }
-}
-// checkMatch();
-
-
-function blurify() {
+function blurify(){
   const profileImage = document.querySelector(".standard-image");
 
   // let c = document.createElement("canvas");
