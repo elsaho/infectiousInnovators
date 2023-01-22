@@ -69,6 +69,10 @@ i {
 /* COLORS */
 
 /* COLOR PALETTE COLORS */
+.timberwolf {
+    background-color: #eadeda;
+}
+
 .brandy {
     background-color: #8a3033;
 }
@@ -174,6 +178,10 @@ body {
 }
 
 .border {
+    cursor: pointer;
+}
+
+#title {
     cursor: pointer;
 }
 
