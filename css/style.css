@@ -1,4 +1,6 @@
 /* Icon sizes */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
+
 .material-icons.md-18 {
     font-size: 18px;
 }
