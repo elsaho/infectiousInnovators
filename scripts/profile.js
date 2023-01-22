@@ -48,6 +48,9 @@ function populateInfo() {
             var userAge = userDoc.data().age;
             var userLocation = userDoc.data().location;
             var userGender = userDoc.data().gender;
+            var userHook = userDoc.data().hook;
+            var prompt1 = userDoc.data().prompt1;
+            var prompt2 = userDoc.data().prompt2;
             // var profilePic = userDoc.data().profilePic;
             if (userName != null) {
               document.getElementById("nameInput").value = userName;
@@ -57,6 +60,15 @@ function populateInfo() {
             }
             if (userLocation != null) {
               document.getElementById("locationInput").value = userLocation;
+            }
+            if (userHook != null) {
+              document.getElementById("hook").value = userHook;
+            }
+            if (prompt1 != null) {
+              document.getElementById("prompt1").value = prompt1;
+            }
+            if (prompt2 != null) {
+              document.getElementById("prompt2").value = prompt2;
             }
             if (userGender != null) {
               if (userGender == "Female") {
@@ -117,19 +129,28 @@ function populateInfo() {
     userName = document.getElementById('nameInput').value; 
     userAge = document.getElementById('ageInput').value; 
     userLocation = document.getElementById('locationInput').value;
-    // userGender = document.querySelector('input[name="Gender"]:checked').value;
+    userGender = document.querySelector('input[name="Gender"]:checked').value;
+    userHook = document.getElementById('hook').value;
+    prompt1 = document.getElementById('prompt1').value;
+    prompt2 = document.getElementById('prompt2').value;
   
     currentUser.update({
         name: userName,
         age: userAge,
         location: userLocation,
+        hook: userHook,
+        prompt1: prompt1,
+        prompt2: prompt2
         // gender: userGender
       })
       .then(() => {
         console.log("test");
         savePicture(currentUser.id)
         console.log("Document successfully updated!");
-        // window.location.assign("main.html");
+      })
+
+      currentUser.update({
+        gender: userGender
       })
   }
 

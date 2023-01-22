@@ -33,8 +33,9 @@
   <nav id="navbarPlaceholder"></nav>
   <div class="container spacing-footer spacing-header pt-2 text-center lavender-blush"></div>
   <!-- Body -->
-  <div class="container">
+  <div class="container spacing-footer">
     <h1>Profile</h1>
+    <p>Click the edit button to change your dating profile</p>
     <form>
       <fieldset class="mb-3" id="personalInfoFields" disabled>
         <div class="form-group">
@@ -64,22 +65,20 @@
           <input class="form-check-input Non-binary" type="radio" name="Gender" value="Non-binary">
           <label>Non-binary</label>
         </div>
-        <!-- <br>
-        <label>Hobbies<span style="display:inline-block; width: 20pt;"></span></label>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-          <label class="form-check-label" for="inlineCheckbox1">1</label>
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">Introduction</label>
+          <textarea class="form-control" id="hook" rows="2"></textarea>
         </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-          <label class="form-check-label" for="inlineCheckbox2">2</label>
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">Fun fact about me...</label>
+          <textarea class="form-control" id="prompt1" rows="2"></textarea>
         </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
-          <label class="form-check-label" for="inlineCheckbox3">3 (disabled)</label>
-        </div> -->
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">I want someone who...</label>
+          <textarea class="form-control" id="prompt2" rows="2"></textarea>
+        </div>
         <div class="container text-center py-3">
-          <img id="mypic-goes-here" src="/images/portrait.svg" width=50 height=50 />
+          <img id="mypic-goes-here" src="/images/portrait.svg" width= "50" height= "50" />
           <input type="file" id="mypic-input" accept="image/*" />
         </div>
       </fieldset>

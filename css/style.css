@@ -145,7 +145,7 @@ body {
 }
 
 .btn:hover {
-    color: #823329;
+    color: #ffffff;
 }
 
 /* css for cursor pointer */
@@ -192,6 +192,7 @@ body {
 .standard-image{
     width: 100%;
     height: 100%;
+    filter: blur(10px);
 }
 
 /* Stuff for buttons*/
@@ -210,3 +211,5 @@ button[type=button]{
 a[type=button]{
     background-color: #823329 !important;
 }
+
+/* Pixel image */
