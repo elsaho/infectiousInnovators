@@ -1,4 +1,7 @@
 var currentUser;
+var uid;
+var matchID;
+var likes;
 
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
@@ -41,19 +44,19 @@ function displayCardProfile(collection) {
     if (user) {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
-      var uid = user.uid;
+      uid = user.uid;
       console.log(uid);
       var ID = [];
       db.collection("users")
         .limit(1)
         .get()
         .then(snap => {
-          var i = 1;  //if you want to use commented out section
+          var i = 1; //if you want to use commented out section
           snap.forEach(doc => { //iterate thru each doc
             ID.push(doc.data().ID_Name);
             var name = doc.data().name;
             var age = doc.data().age;   
-            //danger below     
+     //danger below     
             if (age < minAge | age > maxAge) {
               main.reload();
             }
@@ -87,6 +90,7 @@ function displayCardProfile(collection) {
             //likes field created in Fire Store foe addToLikes()
             currentUser.set({
               likes: firebase.firestore.FieldValue.arrayUnion(),
+              matches: firebase.firestore.FieldValue.arrayUnion(),
             }, {
               merge: true
             })
@@ -96,13 +100,16 @@ function displayCardProfile(collection) {
             currentUser.get().then(userDoc => {
               var likes = userDoc.data().likes;
               if (likes.includes(userID)) {
+              var likes = userDoc.data().likes;
+              }
+              if (likes.includes(userID)) {
                 document.getElementById('save-' + userID).innerText = 'favorite';
               }
             })
 
             //attach to gallery
             document.getElementById(collection + "-go-here").appendChild(newcard);
-            i++;   //if you want to use commented out section
+            i++; //if you want to use commented out section
 
           })
         })
@@ -117,42 +124,48 @@ function displayCardProfile(collection) {
 displayCardProfile("profile");
 
 function addToLikes(id) {
-  currentUser.get().then((userDoc) => {
-    like = userDoc.data().likes;
-    console.log(like);
+    currentUser.get().then((userDoc) => {
+        like = userDoc.data().likes;
+        console.log(like);
 
-    if (like.includes(id)) {
-      console.log(id)
-      currentUser
-        .update({
-          likes: firebase.firestore.FieldValue.arrayRemove(id),
-        })
-        .then(function () {
-          console.log("This person is removed");
-          var iconID = "save-" + id;
-          console.log(iconID);
-          document.getElementById(iconID).innerText = 'favorite_border';
-        });
-    } else {
-      currentUser
-        .set({
-          likes: firebase.firestore.FieldValue.arrayUnion(id),
-        }, {
-          merge: true
-        })
-        .then(function () {
-          console.log("This person is added");
-          var iconID = "save-" + id;
-          console.log(iconID);
-          document.getElementById(iconID).innerText = 'favorite';
-        });
-    }
-  });
+        if (like.includes(id)) {
+            console.log(id)
+            currentUser
+              .update({
+                likes: firebase.firestore.FieldValue.arrayRemove(id),
+              })
+              .then(function () {
+                console.log("This person is removed");
+                var iconID = "save-" + id;
+                console.log(iconID);
+                document.getElementById(iconID).innerText = 'favorite_border';
+              });
+          } else {
+            currentUser
+              .set({
+                likes: firebase.firestore.FieldValue.arrayUnion(id),
+              }, {
+                merge: true
+              })
+              .then(function () {
+                console.log("This person is added");
+                var iconID = "save-" + id;
+                console.log(iconID);
+                document.getElementById(iconID).innerText = 'favorite';
+              });
+          }
+    });
 
 }
 
+// function checkMatch() {
+//   var match;
+//     for (i = 0; i < likes.length; i++) {
+//       matchID = likes[i];
+//       match = db.collection("users").where("userID", "==", matchID);
+      
 
-function blurify() {
+function blurify(){
   const profileImage = document.querySelector(".standard-image");
 
   // let c = document.createElement("canvas");
@@ -189,7 +202,12 @@ function blurify() {
 
   // };
 
-  // img1.src = document.querySelector("#profilePic").src;
+  for (let y = 0; y < h; y += sample_size) {
+    for (let x = 0; x < w; x += sample_size) {
+      let p = (x + (y*w)) * 4;
+    }
+  }
 
+  ctx.fillStyle = "rgba(" + pixelArr[p] + "," + pixelArr[p + 1] + "," + pixelArr[p + 2] + "," + pixelArr[p + 3] + ")";
+ctx.fillRect(x, y, sample_size, sample_size);
 }
-blurify();

@@ -1,20 +1,29 @@
+var currentUser;
 
 // Used to make divs clickable, current changes inner html to test and print
-listenPlease();
-function listenPlease() {
-var clickedChat = document.querySelector('.clickableClass');
 
-clickedChat.addEventListener('click', function(event) {
+async function listenPlease() {
+var clickedChat = document.querySelectorAll('.clickableClass');
+console.log("tyring to print the nodelist", clickedChat);
+clickedChat.forEach((matchBox)=> {  matchBox.addEventListener('click', function(event) {
     document.getElementById("clickableID").innerHTML = "YOU CLICKED ONe OF THE MATCHES TOP ONE WILL CHANGE !"
-    console.log("the console log message", this.id);
-    /// function that populates the chat dynamically which is passed the this,id which is will be the matchID / chatID
-    var selectedChat = this.id;
+    
 
-   
+
 });
+// var currentChat = document.querySelector('.clickableClass');
+
+// currentChat.addEventListener('click', function(event) {
+//     document.getElementById("clickableID").innerHTML = "YOU CLICKED ME!"
+//     console.log("the console log message", this.id);
+
+// });
+
+
+})
 }
 
-function populateChat(selectedChat) {
+async function populateChat(selectedChat) {
 
 }
 
@@ -36,18 +45,18 @@ firebase.auth().onAuthStateChanged(user => {
 
  
 
-  function populateMatches(id) {
+  async function populateMatches(id) {
     currentUser.get().then((userDoc) => {
         matchList = userDoc.data().matches;
         console.log(matchList);
-        makeCardMatchesFromTemplate(matchList);
+        makeCardMatchesFromTemplate(matchList)
 
     });
 
 
 }
 
-function makeCardMatchesFromTemplate(arg) {
+async function makeCardMatchesFromTemplate(arg) {
     var parkingspotCardTemplate = document.getElementById("sideBarMatch");
     var parkingspotCardGroup = document.getElementById("matchGroup");
     for (i = 0; i < arg.length; i++) {
@@ -61,15 +70,16 @@ function makeCardMatchesFromTemplate(arg) {
             console.log(doc.id, " => ", doc.data());
             let matchCard = parkingspotCardTemplate.content.cloneNode(true);
             matchCard.querySelector(".nameClass").innerHTML = name;
-            parkingspotCardGroup.appendChild(matchCard);
+            parkingspotCardGroup.appendChild(matchCard).then(listenPlease());;
         });
     })
     .catch((error) => {
         console.log("Error getting documents: ", error);
     });
-    
+    listenPlease();
     }
  }
+ 
  
 
 
