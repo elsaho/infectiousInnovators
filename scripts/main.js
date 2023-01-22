@@ -57,7 +57,7 @@ function displayCardProfile(collection) {
       var ID = [];
       db.collection("users")
         // .where("minAge", "==", age)
-        .limit(1)
+        // .limit(1)
         .get()
         .then(snap => {
           var i = 1; //if you want to use commented out section
