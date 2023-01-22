@@ -1,5 +1,6 @@
 /* Icon sizes */
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
 .material-icons.md-18 {
     font-size: 18px;
@@ -37,6 +38,7 @@
 body {
     height: 100%;
     background-color: rgb(255, 243, 243);
+    font-family: "VT323";
 }
 
 .light-grey {
@@ -219,4 +221,7 @@ a[type=button]{
     background-color: #823329 !important;
 }
 
-/* Pixel image */
+/* Fonts */
+#login-CTA {
+    font-family: "VT323";
+}
