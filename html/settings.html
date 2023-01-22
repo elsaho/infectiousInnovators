@@ -24,23 +24,27 @@
 
   <!-- Other libraries -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="./styles/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
   <!-- NavBar -->
-  <nav id="topNav"></nav>
+  <nav id="navbarPlaceholder"></nav>
+  <div class="container spacing-footer spacing-header pt-2 text-center lavender-blush">
 
   <!-- Body -->
+  <h1>Settings</h1>
+  <button type="button" class="btn btn-primary" id = "profile">Edit Profile</button>
+  <button type="button" class="btn btn-primary" id = "pref" >Edit Preferences</button>
 
 
   <!-- our own footer goes here-->
-  <nav id="bottomNav"></nav>
+  <nav id="footerPlaceholder"></nav>
 
   <!---------------------------------------------->
   <!-- Scripts -->
   <!---------------------------------------------->
-  <script src="/scripts/authentication.js"></script>
+  <script src="/scripts/firebase.js"   ></script>
   <script src="/scripts/skeleton.js"></script>
   <script src="/scripts/settings.js"></script>
 

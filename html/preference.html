@@ -31,27 +31,26 @@
   <!-- NavBar -->
   <nav id="navbarPlaceholder"></nav>
   <div class="container spacing-footer spacing-header pt-2 text-center lavender-blush"></div>
-  <!-- Body -->
-  <div class="container">
-    <h1>Profile</h1>
+  
+    <!-- Body -->
+  <div class="container2">
+    <h1>Dating Preferences</h1>
     <form>
-      <fieldset class="mb-3" id="personalInfoFields" disabled>
+      <fieldset class="mb-3" id="preferenceFields" disabled>
         <div class="form-group">
-          <label>Name</label>
-          <input type="text" id="nameInput" class="form-control" placeholder="Enter your name">
-        </div>
-        <div class="form-group">
+            <!-- Fix to display range-->
           <label>Age</label>
-          <input type="number" id="ageInput" class="form-control" min = "18" max = "100" placeholder="Enter your age"
-          step="1">
+          <input type="number" id="prefAge" class="form-control" min = "18" max = "100" placeholder="Your preferred age range"
+          step="2">
+          <!-- Fix above -->
         </div>
         <div class="form-group">
           <label>Location</label>
-          <input type="text" id="locationInput" class="form-control" placeholder="Enter your location">
+          <input type="text" class="form-control" placeholder="Your preferred location" id="prefLocation">
         </div>
+        
         <label>Gender<span style="display:inline-block; width: 20pt;"></span></label>
-
-        <div class="form-check form-check-inline">
+        <!-- <div class="form-check form-check-inline">
           <input class="form-check-input Male" type="radio" name="Gender" value="Male">
           <label>Male</label>
         </div>
@@ -63,26 +62,34 @@
           <input class="form-check-input Non-binary" type="radio" name="Gender" value="Non-binary">
           <label>Non-binary</label>
         </div>
-        <!-- <br>
-        <label>Hobbies<span style="display:inline-block; width: 20pt;"></span></label>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-          <label class="form-check-label" for="inlineCheckbox1">1</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-          <label class="form-check-label" for="inlineCheckbox2">2</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
-          <label class="form-check-label" for="inlineCheckbox3">3 (disabled)</label>
-        </div> -->
-      </fieldset>
-      <div class="d-flex justify-content-end mt-5">
-        <button type="button" class="btn btn-info" onclick="editUserInfo()">Edit</button>
-        <span style="width: 10px"></span>
-        <button type="button" class="btn btn-info" onclick="saveUserInfo()">Save</button>
+       -->
+      
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="prefMale">
+        <label class="form-check-label" for="prefMale">
+          Male
+        </label>
       </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="prefFemale" checked>
+        <label class="form-check-label" for="prefFemale">
+          Female
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="prefNonBinary" checked>
+        <label class="form-check-label" for="prefNonBinary">
+          Non-binary
+        </label>
+      </div>
+    </fieldset>
+
+    <div class="d-flex justify-content-end mt-5">
+        <button type="button" class="btn btn-info" onclick="editUserPref()">Edit</button>
+        <span style="width: 10px"></span>
+        <button type="button" class="btn btn-info" onclick="saveUserPref()">Save</button>
+      </div>
+    
     </form>
   </div>
 
@@ -92,7 +99,7 @@
   <!-- Scripts -->
   <script src="/scripts/firebase.js"   ></script>
   <script src="/scripts/skeleton.js"></script>
-  <script src="/scripts/profile.js"></script>
+  <script src="/scripts/preference.js"></script>
 
 </body>
 </html>
