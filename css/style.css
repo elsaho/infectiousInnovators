@@ -195,7 +195,7 @@ body {
 .standard-image{
     width: 100%;
     height: 100%;
-    filter: blur(100px);
+    filter: blur(25px);
 }
 
 /* Stuff for buttons*/

@@ -136,7 +136,7 @@ function addToLikes(id) {
     currentUser.get().then((userDoc) => {
         like = userDoc.data().likes;
         console.log(like);
-
+        const imageBlur = document.querySelector(".standard-image");
         if (like.includes(id)) {
             console.log(id)
             currentUser
@@ -144,6 +144,7 @@ function addToLikes(id) {
                 likes: firebase.firestore.FieldValue.arrayRemove(id),
               })
               .then(function () {
+                imageBlur.style.filter = "blur(25px)";
                 console.log("This person is removed");
                 var iconID = "save-" + id;
                 console.log(iconID);
@@ -157,6 +158,7 @@ function addToLikes(id) {
                 merge: true
               })
               .then(function () {
+                imageBlur.style.filter = "blur(0px)";
                 console.log("This person is added");
                 var iconID = "save-" + id;
                 console.log(iconID);
